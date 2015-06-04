@@ -13,16 +13,16 @@
 \ get and set fields
 : @loc ( animal -- n )
     @ ;
-: >loc ( animal -- n )
+: >loc ( animal n --  )
     swap ! ;
 : @enr ( animal -- n )
     1 cells + @ ;
 : >enr ( animal n -- )
-    swap 1 cells + ! ;
+    swap 1 cells + +! ;
 : @dir ( animal -- n )
     2 cells + @ ;
 : >dir ( animal n -- )
-    swap 2 cells + ! ;
+    swap 2 cells + +! ;
     
 \ get the address of the gene array
 : @gen ( animal -- [n] )
@@ -41,10 +41,12 @@
     loop ;
 
 \ push to array
+: rev3 ( n1 n2 n3 -- n3 n2 n1 )
+    swap rot ;
 : >>ani ( animal [animal] -- )
     over @loc cells + ! ;
-: >>plt ( plant [plants] -- )
-    over @loc cells + ! ;
+: >>plt ( loc [plants] -- )
+    1 rev3 cells + ! ;
 : >>rndplt ( -- )
     1 ps rndloc cells + ! ;
 
@@ -58,9 +60,8 @@
     r>
     swap 0 
     or
-    if  \ trouble here - stack no in right order? 
-        \ or is first animal not being generated correctly?
-        swap PE swap >enr +!
+    if
+        PE >enr
     else
         drop
     then ;

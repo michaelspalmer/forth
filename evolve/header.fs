@@ -4,3 +4,9 @@
 include random.fs
 include world.fs
 include organism.fs
+
+\ convinience functions
+: ls .s ;
+: cl page ;
+: :wq bye ;
+: :q bye ;
