@@ -23,21 +23,21 @@
     2 cells + @ ;
 : >dir ( animal n -- )
     swap 2 cells + +! ;
-    
+
 \ get the address of the gene array
 : @gen ( animal -- [n] )
     3 cells + @ ;
 \ get the gene at the given index
-: idx@gen ( animal index -- n ) 
+: idx@gen ( animal index -- n )
     swap @gen swap cells + @ ;
 \ loop through and print genes - for debug
 : gen_lp ( animal -- )
-    cr 
-    8 0 
-    do 
-        dup i 
-        idx@gen . 
-        cr 
+    cr
+    8 0
+    do
+        dup i
+        idx@gen .
+        cr
     loop ;
 
 \ push to array
@@ -50,15 +50,15 @@
 : >>rndplt ( -- )
     1 ps rndloc cells + ! ;
 
-    
+
 : hasplant? ( loc -- n )
     ps swap @idx ;
-    
+
 : a/eat ( a -- )
     dup >r
     @loc hasplant?
     r>
-    swap 0 
+    swap 0
     or
     if
         PE >enr

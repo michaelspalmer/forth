@@ -19,7 +19,7 @@ reset_all
 \
 \ int SetElement(int row, int col, int value)
 \ {
-\    array[width * row + col] = value;  
+\    array[width * row + col] = value;
 \    array[width * y + x ]
 \ }
 
