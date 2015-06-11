@@ -61,10 +61,16 @@
     swap 0
     or
     if
+		dup
         PE >enr
+		0 swap ps swap @loc cells + !
     else
         drop
     then ;
+
+: a/move ( a -- ) ;
+	
+
 
 
 \ : >>rndani ( -- )
