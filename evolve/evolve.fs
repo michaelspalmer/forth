@@ -2,7 +2,7 @@ include header.fs
 
 reset_all
 
-^gen gs gs 0 500 center ^ani an an as >>ani
+^gen gs gs 0 500 center ^ani an an ANIMALS >>ani
 
 \ : evolve
 

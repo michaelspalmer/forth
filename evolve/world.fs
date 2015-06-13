@@ -1,34 +1,44 @@
 \ Constants
-70 constant W
-30 constant H
-W H * constant L
+70 constant WIDTH
+30 constant HEIGHT
+WIDTH HEIGHT * constant LENGTH
 50 constant PE
 
 \ Arrays to hold the organisms
-variable ps L CELLS ALLOT
-variable as L CELLS ALLOT
+variable PLANTS LENGTH CELLS ALLOT
+variable ANIMALS LENGTH CELLS ALLOT
 
 \ reset button
 : reset_all ( -- )
-    ps  L cells erase
-    as L cells erase
+    PLANTS LENGTH cells erase
+    ANIMALS LENGTH cells erase
     clearstack
     page
     cr ." all variables reset" cr ;
 
 \ Location words, random number generation
 : xy_to_loc ( x y -- loc )
-    W * + ;
+    WIDTH * + ;
+    
 : rng8 ( -- rn )
     8 random 1+ ;
+    
 : 8Rnd ( -- 8 rns )
-    8 0 do rng8 loop ;
+    8 0 
+    do 
+        rng8 
+    loop 
+    ;
+    
 : rngW ( -- rn )
-    W random ;
+    WIDTH random ;
+    
 : rngH ( -- rn )
-    H random ;
+    HEIGHT random ;
+    
 : center ( -- n )
-    W 2 / H 2 / xy_to_loc ;
+    WIDTH 2 / HEIGHT 2 / xy_to_loc ;
+    
 : rndloc ( -- n )
     rngW rngH xy_to_loc ;
 
@@ -36,11 +46,17 @@ variable as L CELLS ALLOT
 : @idx ( [thing] index --> thing )
     cells + @ ;
     
+: hasplant? ( loc -- n )
+    PLANTS swap @idx ;
+
+: hasanimal? ( loc -- n )
+    ANIMALS swap @idx ;
+    
 \ show the array
 : aloop ( -- )
-    L 0 
+    LENGTH 0 
     do 
-        as i 
+        ANIMALS i 
         @idx 
         dup 
         if 
@@ -52,9 +68,9 @@ variable as L CELLS ALLOT
         then 
     loop ;
 : ploop ( -- )
-    L 0 
+    LENGTH 0 
     do 
-        ps i 
+        PLANTS i 
         @idx 
         dup 
         if 
@@ -69,21 +85,23 @@ variable as L CELLS ALLOT
 
 \ Draw the world
 : show_world ( -- )
-    H 0
+    page
+    2 2 at-xy
+    HEIGHT 0
     do
         cr ." |"
-        W 0
+        WIDTH 0
         do
             i j
             2dup xy_to_loc
-            as swap 
+            ANIMALS swap 
             @idx 0
             or
             if
                 ." M"
             else
                 xy_to_loc 
-                ps swap 
+                PLANTS swap 
                 @idx 0 
                 or
                 if
@@ -96,4 +114,5 @@ variable as L CELLS ALLOT
         ." |"
     loop
     clearstack
-    quit ;
+    ;
+    
