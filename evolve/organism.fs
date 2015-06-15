@@ -151,6 +151,21 @@
 : a/dead? ( a -- bool )
     @enr 1 < ;
 
+: a/enough? ( a -- bool )
+	@enr 200 > ;
+
+\ : a/reproduce-working ( a -- )
+\	>r
+\	r@ @gen 
+\	r@ @dir 
+\	r@ @enr 
+\	r> @loc 1+ 
+\	[ ^ani an ] \ what to do with this?
+\	an ANIMALS >>ani 
+\	;
+: a/reproduce
+	;
+
 : simulate_day ( -- )
     >>rndplt
     length 0
@@ -165,6 +180,12 @@
                 0 animals i cells + !
                 leave
             then
+			animals i @idx a/enough?
+			if
+				animals i @idx @enr 2 / -1 *
+				animals i @idx swap >enr
+				animals i @idx a/reproduce
+			then
             animals i @idx a/move
         then
     loop
